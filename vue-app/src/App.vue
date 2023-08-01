@@ -1,19 +1,21 @@
 <template>
-
-
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h1>hola</h1>
-    </div>
-  </div>
-</div>
-<h2>hola pana</h2>
+    <Header />
+    <Body />
+    <Footer />
 </template>
 
 <script>
-export default {
+import Header from "./components/Header.vue"
+import Body from "./components/Body.vue"
+import Footer from "./components/Footer.vue"
 
+export default {
+  name: 'App',
+  components: {
+    Header,
+    Body,
+    Footer,
+  }
 }
 </script>
 
