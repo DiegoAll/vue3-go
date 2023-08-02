@@ -7,8 +7,9 @@
             <hr>
             <!--<form method="post" action="/login" class="needs-validation" novalidate>-->
             <!--changed by form-tag-->
-             <!-- v-model Bind inputs to data-->
-            <form-tag @myevent="submitHandler">
+            <!-- v-model Bind inputs to data-->
+            <!-- Listen for that event-->
+            <form-tag @myevent="submitHandler" name="myform" event="myevent">
                 <text-input
                     v-model="email"
                     label="Email"
@@ -57,30 +58,5 @@ export default {
         }
 
     },
-    mounted(){
-        // **the lifecycle hook**
-
-        // Validaciones de bootstrap
-        (function () {
-            'use strict'
-          
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
-          
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-              .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                  if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                  }
-              
-                  form.classList.add('was-validated')
-                }, false)
-              })
-          })()
-
-    }
 }
 </script>
