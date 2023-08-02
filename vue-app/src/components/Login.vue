@@ -5,15 +5,16 @@
         <div class="col">
             <h1 class="mt-5">Login</h1>
             <hr>
-            <form method="post" action="/login" class="needs-validation" novalidate>
-
+            <!--<form method="post" action="/login" class="needs-validation" novalidate>-->
+            <!--changed by form-tag-->
+            <form-tag>
                 <text-input
                 label="Email"
                     type="email"
                     name="email"
                     required="true">
                 </text-input>
-    
+
                 <text-input
                     label="Password"
                     type="password"
@@ -23,7 +24,7 @@
             
                 <hr>
                 <input type="submit" class="btn btn-primary" value="Login">
-            </form>
+            </form-tag>
         </div>
     </div>
 </div>
@@ -33,10 +34,12 @@
 
 
 <script>
+import FormTag from './forms/FormTag.vue'
 import TextInput from './forms/TextInput.vue'
 export default {
     name: 'login',
     components: {
+        FormTag,
         TextInput,
     },
     mounted(){
