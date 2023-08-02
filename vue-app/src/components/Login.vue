@@ -7,15 +7,18 @@
             <hr>
             <!--<form method="post" action="/login" class="needs-validation" novalidate>-->
             <!--changed by form-tag-->
-            <form-tag>
+             <!-- v-model Bind inputs to data-->
+            <form-tag @myevent="submitHandler">
                 <text-input
-                label="Email"
+                    v-model="email"
+                    label="Email"
                     type="email"
                     name="email"
                     required="true">
                 </text-input>
 
                 <text-input
+                    v-model="password"
                     label="Password"
                     type="password"
                     name="password"
@@ -41,6 +44,18 @@ export default {
     components: {
         FormTag,
         TextInput,
+    },
+    data(){
+        return{
+            email: "",
+            password: "",
+        }
+    },
+    methods: {
+        submitHandler(){
+            console.log("submitHandler called - success!")
+        }
+
     },
     mounted(){
         // **the lifecycle hook**
