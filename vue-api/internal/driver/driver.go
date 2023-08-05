@@ -33,18 +33,22 @@ func ConnectPostgres(dsn string) (*DB, error) {
 
 	// err is passed as parameter in order to update the value within the function and then return it.
 	// the result of the testDB function is assigned back to the err variable, this allows additional actions to be performed within the testDB function based on the error state.
-	err = testDB(err, d)
+	err = testDB(d)
+	if err != nil {
+		return nil, err
+	}
 
 	dbConn.SQL = d
-	return dbConn, err
+	return dbConn, nil
 }
 
-func testDB(err error, d *sql.DB) error {
-	err = d.Ping()
+func testDB(d *sql.DB) error {
+	err := d.Ping()
 	if err != nil {
 		fmt.Println("Error!", err)
-	} else {
-		fmt.Println("*** Pinged database sucessfully! ***")
+		return err
 	}
-	return err
+	fmt.Println("*** Pinged database sucessfully! ***")
+
+	return nil
 }
