@@ -377,6 +377,10 @@ func (t *Token) Insert(token Token, u User) error {
 		return err
 	}
 
+	// we assign the email value, just to be safe, in case it was
+	// not done in the handler that calls this function
+	token.Email = u.Email
+
 	stmt = `insert into tokens (user_id, email, token, token_hash, created_at, updated_at, expiry)
 	values ($1, $2, $3, $4, $5, $6, $7)`
 
