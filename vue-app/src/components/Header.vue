@@ -13,7 +13,8 @@
         </li>
         <li class="nav-item">
           <!--<a class="nav-link" href="#">Features</a>-->
-          <router-link class="nav-link" to="/login">Login</router-link>
+          <router-link v-if="store.token == ''" class="nav-link" to="/login">Login</router-link>
+          <router-link v-else class="nav-link" to="/logout">Logout</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Test</a>
@@ -23,3 +24,15 @@
   </div>
 </nav>
 </template>
+
+<script>
+import { store } from '../components/store.js'
+
+export default{
+  data(){
+    return {
+      store,
+    }
+  }
+}
+</script>
