@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { store } from '../components/store.js'
+import { store } from './store.js'
 import router from './../router/index.js'
 
 export default{
@@ -37,8 +37,25 @@ export default{
   },
   methods:{
     logout(){
-      store.token = "";
-      router.push("/login");
+      const payload = {
+        token: store.token,
+      }
+
+      const requestOptions = {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }
+
+      fetch("http://localhost:8081/users/logout", requestOptions)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error){
+          console.log(response.message);
+        }else{
+            store.token = "";
+            router.push("/login");
+        }
+      })
     }
   }
 }
