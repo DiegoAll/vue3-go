@@ -18,7 +18,8 @@ type application struct {
 	infoLog  *log.Logger
 	errorLog *log.Logger
 	//db       *driver.DB
-	models data.Models
+	models      data.Models
+	environment string
 }
 
 func main() {
@@ -30,6 +31,7 @@ func main() {
 
 	//dsn := "host=localhost port=54320 user=postgres password=password dbname=vueapi sslmode=disable timezone=UTC connect_timeout=5"
 	dsn := os.Getenv("DSN")
+	environment := os.Getenv("ENV")
 
 	db, err := driver.ConnectPostgres(dsn)
 	if err != nil {
@@ -42,7 +44,8 @@ func main() {
 		infoLog:  infoLog,
 		errorLog: errorLog,
 		//db:       db,
-		models: data.New(db.SQL),
+		models:      data.New(db.SQL),
+		environment: environment,
 	}
 
 	err = app.serve()
