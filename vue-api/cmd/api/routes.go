@@ -25,6 +25,20 @@ func (app *application) routes() http.Handler {
 	mux.Post("/users/login", app.Login)
 	mux.Post("/users/logout", app.Logout)
 
+	mux.Route("/admin", func(mux chi.Router) {
+		mux.Use(app.AuthTokenMiddleware)
+
+		mux.Post("/foo", func(w http.ResponseWriter, r *http.Request) {
+			payload := jsonResponse{
+				Error:   false,
+				Message: "bar",
+			}
+
+			app.writeJSON(w, http.StatusOK, payload)
+
+		})
+	})
+
 	mux.Get("/users/all", func(w http.ResponseWriter, r *http.Request) {
 		var users data.User
 
@@ -53,7 +67,7 @@ func (app *application) routes() http.Handler {
 			Password:  "password",
 		}
 
-		app.infoLog.Println("Addding user...")
+		app.infoLog.Println("Adding user...")
 
 		id, err := app.models.User.Insert(u)
 		if err != nil {
