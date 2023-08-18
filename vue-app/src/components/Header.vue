@@ -11,6 +11,36 @@
           <!--<a class="nav-link active" aria-current="page" href="#">Home</a>-->
           <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
         </li>
+
+        <li class="nav-item">
+          <router-link class="nav-link active" to="/projects">Projects</router-link>
+        </li>
+
+        <li v-if="store.token !== ''" class="nav-item dropdown">
+          <a class="nav-link dropdown-toogle" href="#" id="navBarDropDown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Admin
+            </a>
+          <ul class="dropdown-menu" aria-labelledby="navBarDropDown">
+            <li>
+              <router-link class="dropdown-item" to="/admin/users">Manage Users </router-link>
+            </li>
+            <li>
+              <router-link class="dropdown-item" to="/admin/users/0">Add User </router-link>
+            </li>
+            <li>
+              <router-link class="dropdown-item" to="/admin/projects">Manage Projects </router-link>
+            </li>
+            <li>
+              <!-- "Dynamic route" The path can vary depending the context -->
+              <router-link class="dropdown-item" :to="{name:'ProjectEdit', params: {projectId: 0}}"> Add Project</router-link>
+            </li>
+          </ul>
+
+
+        </li>
+
+
         <li class="nav-item">
           <!--<a class="nav-link" href="#">Features</a>-->
           <router-link v-if="store.token == ''" class="nav-link" to="/login">Login</router-link>
@@ -51,7 +81,7 @@ export default{
         body: JSON.stringify(payload),
       }
 
-      fetch("http://localhost:8081/users/logout", requestOptions)
+      fetch(process.env.VUE_APP_API_URL + "/users/logout", requestOptions)
       .then((response) => response.json())
       .then((response) => {
         if (response.error){
