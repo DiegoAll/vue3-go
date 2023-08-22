@@ -30,21 +30,25 @@ const routes = [
         component: Project,
     },
     {
+        // Manage Projects
         path: '/admin/projects',
         name : 'ProjectsAdmin',
         component: ProjectsAdmin,
     },
     {
+        // Add Project
         path: '/admin/projects/:projectId',
         name : 'ProjectEdit',
         component: ProjectEdit,
     },
     {
+        // Manage Users - All Users
         path: '/admin/users',
         name : 'Users',
         component: Users,
     },
     {
+        // Add user
         path: '/admin/users/:userId',
         name : 'User',
         component: User,
