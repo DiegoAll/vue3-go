@@ -1,5 +1,5 @@
 <template>
-    <div class="=container">
+    <div class="container">
         <div class="row">
             <div class="col">
                 <h1 class="mt-3">User</h1>
@@ -34,7 +34,7 @@
                         v-if="this.user.id === 0"
                         v-model="user.password"
                         type="password"
-                        required="password"
+                        required="true"
                         label="Password"
                         :value="user.password"
                         name="password"></text-input>
@@ -44,6 +44,7 @@
                         v-model="user.password"
                         type="password"
                         label="Password"
+                        help="Leave empty to keep existing password"
                         :value="user.password"
                         name="password"></text-input>
 
@@ -81,7 +82,7 @@ export default {
     beforeMount(){
         Security.requireToken();
 
-        if (parseInt(String(this.$route.params.userID), 10) > 0){
+        if (parseInt(String(this.$route.params.userId), 10) > 0){
             // editing an existing user
             fetch(process.env.VUE_APP_API_URL + "/admin/users/get/" + this.$route.params.userId, Security.requestOptions(""))
             .then((response) => response.json())
@@ -94,7 +95,7 @@ export default {
                 } else{
                     this.user = data;
                     // we want password to be empty for existing users
-                    this.user.password = ""
+                    this.user.password = "";
                 }
             })
         }
@@ -120,9 +121,9 @@ export default {
             const payload = {
                 id: parseInt(String(this.$route.params.userId), 10),
                 first_name: this.user.first_name,
-                last_name: this.user.first_name,
-                email: this.user.first_name,
-                password: this.user.first_name,
+                last_name: this.user.last_name,
+                email: this.user.email,
+                password: this.user.password,
             }
 
             fetch(`${process.env.VUE_APP_API_URL}/admin/users/save`, Security.requestOptions(payload))
@@ -135,7 +136,7 @@ export default {
                     })
                 } else {
                     notie.alert({
-                        type:'sucess',
+                        type:'success',
                         text: 'Changes saved!',
                     })
                 }

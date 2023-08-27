@@ -33,3 +33,5 @@ func (app *application) routes() http.Handler {
 
 	return mux
 }
+
+// Removed test routes for test backend functions "/users/add", "/test-generate-token", "/test-save-token", "/test-validate-token"
