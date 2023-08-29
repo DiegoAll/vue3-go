@@ -11,6 +11,7 @@
                     <tr>
                         <th>User</th>
                         <th>Email</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,6 +20,12 @@
                             <router-link :to="`/admin/users/${u.id}`">{{u.last_name}}, {{u.first_name}}</router-link>
                         </td>
                         <td>{{u.email}}</td>
+                        <td v-if="u.token.id > 0">
+                            <span class="badge bg-sucess" @click="logUserOut(u.id)">Logged in</span>
+                        </td>
+                        <td v-else>
+                            <span class="badge bg-danger">Not logged in</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -32,7 +39,8 @@
 
 <script>
 import Security from './security.js'
-// import notie from 'notie'
+import notie from 'notie'
+import {store} from './store.js'
 
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -43,6 +51,7 @@ export default {
         return {
             users: [],
             ready: false, 
+            store,
         }
     },
     beforeMount(){
@@ -63,6 +72,21 @@ export default {
         .catch((error) => {
                 this.$emit('error', error);
         });
+    },
+    methods: {
+        logUserOut(id){
+            if (id !== store.user.id){
+                notie.confirm({
+                    text: "Are you sure want to log this user out?",
+                    submitText: "Log Out",
+                    submitCallback: function(){
+                        console.log("Would log out user id", id);
+                    }
+                })
+            } else {
+                this.$emit('error', "You can't log yourself out!");
+            }
+        }
     }
 }
 </script>
