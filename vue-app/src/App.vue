@@ -47,27 +47,27 @@ export default {
       }
     }
   },
-  mounted(){
-    const payload = {
-      foo: "bar",
-    }
+  // mounted(){
+  //   const payload = {
+  //     foo: "bar",
+  //   }
 
-    // const headers = new Headers();
-    // headers.append("Content-Type", "application/json");
-    // headers.append("Authorization", "Bearer " + store.token);
+  //   // const headers = new Headers();
+  //   // headers.append("Content-Type", "application/json");
+  //   // headers.append("Authorization", "Bearer " + store.token);
 
-    const requestOptions = {
-      method: "POST",
-      body: JSON.stringify(payload),
-    //  headers: headers,
-    }
+  //   const requestOptions = {
+  //     method: "POST",
+  //     body: JSON.stringify(payload),
+  //   //  headers: headers,
+  //   }
 
-    fetch("http://localhost:8081/admin/foo", requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-  },
+  //   fetch("http://localhost:8081/admin/foo", requestOptions)
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log(data);
+  //   })
+  // },
   methods: {
     success(msg){
       notie.alert({

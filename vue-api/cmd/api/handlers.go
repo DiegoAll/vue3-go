@@ -160,7 +160,7 @@ func (app *application) EditUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		//if password != string , update password
+		//if password != string, update password
 		if user.Password != "" {
 			err := u.ResetPassword(user.Password)
 			if err != nil {
@@ -248,7 +248,7 @@ func (app *application) LogUserOutAndSetInactive(w http.ResponseWriter, r *http.
 
 	payload := jsonResponse{
 		Error:   false,
-		Message: "user loggd out and set to inactive",
+		Message: "user logged out and set to inactive",
 	}
 
 	_ = app.writeJSON(w, http.StatusAccepted, payload)

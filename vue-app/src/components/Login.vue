@@ -67,12 +67,13 @@ export default {
             .then((response) => response.json())
             .then((response) => {
                 if (response.error) {
-                    notie.alert({
-                        type: 'error',
-                        text: response.message,
-                        // stay: true,
-                        // position: 'bottom',
-                    })
+                    this.$emit('error', response.message);
+                    // notie.alert({
+                    //     type: 'error',
+                    //     text: response.message,
+                    //     // stay: true,
+                    //     // position: 'bottom',
+                    // })
                 } else {
                     //console.log(data);
                     console.log("Token:", response.data.token.token);
