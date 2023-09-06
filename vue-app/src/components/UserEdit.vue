@@ -54,7 +54,6 @@
                             Active
                         </label>
                     </div>
-
                     <div class="form-check">
                         <input v-model="user.active" class="form-check-input" type="radio" id="user-active-2" :value="0">
                         <label class="form-check-label" for="user-active-2">
@@ -63,24 +62,21 @@
                     </div>
 
                     <hr>
-                    
                     <div class="float-start">
                         <input type="submit" class="btn btn-primary me-2" value="Save">
                         <router-link to="/admin/users" class="btn btn-outline-secondary">Cancel</router-link>
                     </div>
-
                     <div class="float-end">
-                        <!-- Compares the userId in the route with the user id store -->
-                        <!-- Is set to "javascript:void(0);" to prevent the link from performing a navigation action. Instead it will be handled by clicking via the @click event -->
                         <a v-if="(this.$route.params.userId > 0) && (parseInt(String(this.$route.params.userId), 10) !== store.user.id)"
                             class="btn btn-danger" href="javascript:void(0);" @click="confirmDelete(this.user.id)">Delete</a>
                     </div>
                     <div class="clearfix"></div>
 
                 </form-tag>
+
+                <p v-else>Loading...</p>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -89,22 +85,23 @@ import Security from './security.js'
 import FormTag from './forms/FormTag.vue'
 import TextInput from './forms/TextInput.vue'
 import notie from 'notie'
-import router from './../router/index.js'
 import {store} from './store'
+import router from './../router/index.js'
 
 export default {
-    beforeMount(){
+    beforeMount() {
         Security.requireToken();
 
-        if (parseInt(String(this.$route.params.userId), 10) > 0){
+        if (parseInt(String(this.$route.params.userId), 10) > 0) {
             // editing an existing user
             fetch(process.env.VUE_APP_API_URL + "/admin/users/get/" + this.$route.params.userId, Security.requestOptions(""))
             .then((response) => response.json())
-            .then((data)=> {
-                if (data.error){
+            .then((data) => {
+                if (data.error) {
                     this.$emit('error', data.message);
-                } else{
+                } else {
                     this.user = data;
+                    this.ready = true;
                     // we want password to be empty for existing users
                     this.user.password = "";
                 }
@@ -113,9 +110,9 @@ export default {
             this.ready = true;
         }
     },
-    data(){
-        return{
-            user:{
+    data() {
+        return {
+            user: {
                 id: 0,
                 first_name: "",
                 last_name: "",
@@ -127,12 +124,12 @@ export default {
             ready: false,
         }
     },
-    components:{
+    components: {
         'form-tag': FormTag,
         'text-input': TextInput,
     },
-    methods:{
-        submitHandler(){
+    methods: {
+        submitHandler() {
             const payload = {
                 id: parseInt(String(this.$route.params.userId), 10),
                 first_name: this.user.first_name,
@@ -141,7 +138,6 @@ export default {
                 password: this.user.password,
                 active: this.user.active,
             }
-
 
             fetch(`${process.env.VUE_APP_API_URL}/admin/users/save`, Security.requestOptions(payload))
             .then((response) => response.json())
@@ -156,22 +152,20 @@ export default {
             .catch((error) => {
                 this.$emit('error', error);
             })
-        },
-        confirmDelete(id){
+        }, 
+        confirmDelete(id) {
             notie.confirm({
                 text: "Are you sure you want to delete this user?",
                 submitText: "Delete",
-                submitCallback: function(){
-                    console.log("will delete", id)
-
+                submitCallback: function() {
                     let payload = {
                         id: id,
                     }
 
                     fetch(process.env.VUE_APP_API_URL + "/admin/users/delete", Security.requestOptions(payload))
-                    .then((response)=> response.json())
+                    .then((response) => response.json())
                     .then((data) => {
-                        if (data.error){
+                        if (data.error) {
                             this.$emit('error', data.message);
                         } else {
                             this.$emit('success', "User deleted");

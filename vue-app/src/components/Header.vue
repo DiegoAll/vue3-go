@@ -16,8 +16,12 @@
           <router-link class="nav-link active" to="/projects">Projects</router-link>
         </li>
 
+        <li class="nav-item">
+          <router-link class="nav-link active" to="/tests">Tests</router-link>
+        </li>
+
         <li v-if="store.token !== ''" class="nav-item dropdown">
-          <a class="nav-link dropdown-toogle" href="#" id="navBarDropDown" role="button" data-bs-toggle="dropdown"
+          <a class="nav-link dropdown-toggle" href="#" id="navBarDropDown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             Admin
             </a>
@@ -36,18 +40,12 @@
               <router-link class="dropdown-item" :to="{name:'ProjectEdit', params: {projectId: 0}}"> Add Project</router-link>
             </li>
           </ul>
-
-
         </li>
-
 
         <li class="nav-item">
           <!--<a class="nav-link" href="#">Features</a>-->
           <router-link v-if="store.token == ''" class="nav-link" to="/login">Login</router-link>
           <a href="javascript:void(0);" v-else class="nav-link" @click="logout">Logout</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Test</a>
         </li>
       </ul>
 

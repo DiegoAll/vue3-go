@@ -67,7 +67,6 @@ func (app *application) errorJSON(w http.ResponseWriter, err error, status ...in
 		statusCode = status[0]
 	}
 
-	//var customErr error
 	var customErr error
 
 	switch {
